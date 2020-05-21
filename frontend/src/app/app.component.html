@@ -1,0 +1,82 @@
+<router-outlet *ngIf="!isLoggedIn">
+
+</router-outlet>
+<div *ngIf="isLoggedIn">
+    <div class="head-header">
+        <a style="cursor: pointer;">
+            <div class="nav-header-custom" [routerLink]="['/home']">
+                <div class="title">
+                    <span id="title_" class="brand-title">
+                        Delivery
+                    </span>
+
+                </div>
+            </div>
+        </a>
+        <div class="header-custom">
+            <div class="header-content">
+
+                <div class="nav-control">
+                    <img mat-raised-button (click)="drawer.toggle()" style="width: 18px; height: 18px;" src="../../../assets/icons/icons/div-toggle.png" alt="">
+                </div>
+                <div class="header-right">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative" data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="../../../assets/images/form-user.png" mat-button [matMenuTriggerFor]="menu" height="40" width="40" alt="" style="margin-top: 25px;">
+                            </div>
+                            <mat-menu #menu="matMenu" style="margin-top: 20px;">
+
+                                <div style="margin-top: 20px;"> <button mat-menu-item [routerLink]="['/profile']"> 
+                                 <a><i class="icon-user"></i> <span>Profile</span></a>
+                                </button>
+                                    <button mat-menu-item (click)="logout()"><a><i class="icon-key"></i>
+                                    <span>Logout</span></a></button>
+                                </div>
+
+                            </mat-menu>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sideBar">
+        <mat-drawer-container class="mat-drawer-container" hasBackdrop="false">
+
+
+            <mat-drawer #drawer mode="side">
+                <mat-nav-list>
+
+                    <app-side-bar-items parentName="Deliveries" [childList]="[{name:'Search',url:'delivery-search-screen',show:true},{name:'Insert',url:'delivery-insert-screen',show:!isConsultant}]">
+                    </app-side-bar-items>
+
+
+                    <!-- <app-side-bar-items parentName="Applications" [childList]="[{name:'Search',url:'module-search-screen',show:true}]">
+                    </app-side-bar-items> -->
+
+                    <app-side-bar-items parentName="Appls" [childList]="[{name:'Appl Page',url:'appl-screen',show:true}]">
+                    </app-side-bar-items>
+
+                    <app-side-bar-items parentName="Users" *ngIf="isAdmin" [childList]="[{name:'Search',url:'users-page',show:true},{name:'Insert',url:'users-insert-page',show:true}]">
+                    </app-side-bar-items>
+
+
+
+                </mat-nav-list>   
+            </mat-drawer>
+
+            <mat-drawer-content>
+
+                <div>
+                    <router-outlet>
+                        <app-alert></app-alert>
+                    </router-outlet>
+                </div>
+            </mat-drawer-content>
+        </mat-drawer-container>
+
+    </div>
+</div>

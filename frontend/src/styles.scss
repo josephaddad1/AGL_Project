@@ -1,0 +1,80 @@
+div {
+    white-space: pre-line;
+}
+
+.menu-img {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.menu-img:hover {
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+}
+
+
+label {
+    font-weight: bold;
+    color: rgb(100, 98, 98);
+}
+
+.required:before {
+    content: "*";
+    font-weight: bold;
+    color: red;
+}
+
+.menu-icon {
+    margin: 0 !important;
+    margin-bottom: 2px !important;
+}
+
+.content {
+    margin-bottom: 15px !important;
+}
+
+.modal-content {
+    margin-top: 100px;
+}
+
+input {
+    color: black !important;
+}
+
+.dark-overlay {
+    opacity: 50%;
+}
+
+th,
+label {
+    font-weight: bold !important;
+    color: rgb(100, 98, 98) !important;
+}
+
+.custom-modalbox {
+    mat-dialog-container {
+        margin-top: 40px;
+    }
+}
+
+.appl-name{
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 550;
+    
+    }
+    
+    .appl-name:hover{
+        font-size: 16px;
+        }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.card-title {
+    font-size: 18px!important;
+    font-weight: bold !important;
+    line-height: 18px!important; 
+    color: #363636 !important;
+  }

@@ -1,0 +1,22 @@
+<a *ngIf="child? child.show:true" mat-list-item [ngStyle]="{'padding-left': (depth * 12) + 'px'}"
+    (click)="onItemSelected(child)" [ngClass]="{'active':expanded, 'expanded': expanded}" class="item">
+    <div style="width: 100%;">
+        <img *ngIf="depth" src="../../../assets/icons/icons/{{parentName}}.png" alt=""
+            style=" position: relative; float: left; width: 14px; height: 14px; margin-right: 5px; margin-top: 3px;">
+
+        <span style="position: relative; float: left;" [style.font-weight]=" depth ? 'initial':'bold' ">
+            {{parentName}}
+        </span>
+
+
+        <img *ngIf="!depth" [@indicatorRotate]="expanded ? 'expanded': 'collapsed'" src="../assets/icons/icons/next.png"
+            style="width: 14px; height: 14px; position: relative !important; float: right !important; ">
+    </div>
+
+</a>
+<div *ngIf="expanded">
+    <div *ngFor="let child of childList">
+        <app-side-bar-items [child]="child" depth="2"></app-side-bar-items>
+
+    </div>
+</div>

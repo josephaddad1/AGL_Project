@@ -1,0 +1,7 @@
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+    background-color: #c53333 !important; /* Red background for example */
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color:#c53333;
+  }

@@ -1,0 +1,108 @@
+<mat-spinner class="loadder" *ngIf="dataTableIsLoading"></mat-spinner>
+<div style="margin-top: 10px;" class="content" [ngClass]="{'dark-overlay':dataTableIsLoading}">
+    <div class="content">
+
+
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Users <button class="btn btn-dark" style="margin-left: 5px; float:right;"
+                            [routerLink]="['/users-insert-page']">
+                            Add new User</button></h4>
+                    <div>
+                        <mat-form-field>
+                            <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter...">
+                        </mat-form-field>
+
+                        <label class="label"> <input type="radio" class="form-radio" (change)="doFilterConsultant(false,false)"
+                            value="disabled" name="filter" checked="true">All</label>
+
+                        <label class="label"> <input type="radio" class="form-radio"
+                                (change)="doFilterConsultant($event.target.value,false)" value="Noncons"
+                                name="filter">None Consultant</label>
+
+
+                        <label class="label"> <input type="radio" class="form-radio"
+                                (change)="doFilterConsultant($event.target.value,true)" value="cons"
+                                name="filter">Consultant</label>
+
+
+                        <label class="label"> <input type="radio" class="form-radio" (change)="doFilterdDisabled($event.target.value)"
+                                value="disabled" name="filter">Disabled</label>
+
+                        
+
+                    </div>
+                    <div class="table-responsive">
+                        <table mat-table matSort matSortActive="fullName" matSortDirection="asc"
+                            [dataSource]="dataSource" class="table table-striped table-bordered zero-configuration">
+
+                            <ng-container matColumnDef="edit">
+                                <th style="width: 60px;" mat-header-cell *matHeaderCellDef> </th>
+                                <td style="width: 60px;" matmat-cell *matCellDef="let element "
+                                    style="text-align: center;">
+                                    <span> <img class="menu-img" [matMenuTriggerFor]="menu"
+                                            src="../../../assets/icons/icons/menu.png" title="Menu"></span>
+                                    <mat-menu #menu="matMenu">
+                                        <button (click)="openEditForm(element)" mat-menu-item>
+                                            <img src="../../../assets/icons/icons/edit.png" class="menu-icon">
+                                            Edit
+                                        </button>
+                                        <button mat-menu-item (click)="resetPassword(element)">
+                                            <img src="../../../assets/icons/icons/refresh.png" class="menu-icon">
+                                            Reset Password</button>
+                                        <!--for release manager and admin only -->
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="fullName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name</th>
+                                <td matmat-cell *matCellDef="let element ">
+                                    {{element.fullName}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="username">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Username</th>
+                                <td matmat-cell *matCellDef="let element ">
+                                    {{element.username}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="role">
+                                <th mat-header-cell *matHeaderCellDef> Role</th>
+                                <td matmat-cell *matCellDef="let element ">
+                                    {{element.role.description}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="consultant">
+                                <th mat-header-cell *matHeaderCellDef > Consultant</th>
+                                <td matmat-cell *matCellDef="let element " style="text-align: center;">
+                                    <span><img *ngIf="element.consultant_flag==='O'"
+                                            src="../../../assets/icons/icons/yes.png" title="Consultant"> </span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="statusCode">
+                                <th mat-header-cell *matHeaderCellDef >Disabled</th>
+                                <td matmat-cell *matCellDef="let element " style="text-align: center;">
+                                    <span>
+                                        <img *ngIf="element.status_code==='D'" src="../../../assets/icons/icons/yes.png"
+                                            title="Disabled"></span>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                            </tr>
+                        </table>
+
+                        <div style="text-align: center; size:16px; font-weight: bold;"
+                            *ngIf="users.length==0 && !dataTableIsLoading "> No Data
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[5,10, 50, 100]" showFirstLastButtons [length]="length"
+                            (page)="$event"></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

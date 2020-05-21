@@ -1,0 +1,66 @@
+.nav-header-custom {
+    height: 5rem;
+    width: 15.1875rem;
+    display: inline-block;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #c53333;
+    /* background: red; */
+}
+
+.header-custom {
+    height: 5rem;
+    z-index: 1;
+    position: relative;
+    padding: 0 0.9375rem;
+    background: #fff;
+    margin-left: 15.1875rem;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
+.head-header {
+    border-radius: 4% !important;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    border: 0px !important;
+    border-radius: 0.625rem !important;
+    box-shadow: 6px 11px 41px -28px #a99de7 !important;
+}
+
+.logo {
+    position: relative;
+    float: left;
+    height: auto;
+    width: 100%;
+    margin: 5px 5px;
+}
+
+#title_ {
+    color: seashell;
+    font-size: 3em !important;
+    margin-right: 50px;
+}
+.title{
+    
+    margin-top: 26px !important ;
+}
+.mat-drawer-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 100px !important;
+}
+
+mat-drawer {
+    width: 243px !important;
+}
+
+.mat-menu-content {
+    margin-top: 20px !important;
+}

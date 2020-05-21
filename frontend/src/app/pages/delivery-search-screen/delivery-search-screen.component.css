@@ -1,0 +1,149 @@
+.parentCell {
+    position: relative !important;
+}
+
+.show123 {
+    display: none !important;
+    width: auto !important;
+    position: absolute !important;
+    z-index: 1000 !important;
+    border: 1px !important;
+    background-color: white !important;
+    border: 1px solid gray !important;
+    padding: 3px !important;
+    margin-top: -20%;
+}
+
+.parentCell:hover span.show123 {
+    display: block !important;
+}
+
+.content {
+    margin-top: 1%;
+}
+
+.btn-right {
+    margin-top: 3%;
+    margin-left: 23%;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+th,
+.mat-paginator-page-size-label {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    font-size: 14px;
+    color: rgb(100, 98, 98);
+    font-weight: 450;
+    width: 10% !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td {
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    font-family: "Roboto", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #76838f;
+    text-align: left;
+    border: 1px solid rgb(230, 228, 228) !important;
+}
+
+img {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* label {
+  color: rgb(100, 98, 98);
+  font-weight: 450;
+} */
+
+.ellipsis {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+
+/* .appl:hover {
+  cursor: pointer !important;
+  background-color: blue;
+} */
+
+
+/* td.ellipsis:hover {
+  text-overflow: clip;
+  width: auto !important;
+  white-space: normal;
+} */
+
+.width-100 {
+    width: 100px !important;
+}
+
+.width-300 {
+    width: 300px !important;
+}
+
+.width-60 {
+    width: 60px !important;
+}
+
+.width-40 {
+    width: 40px !important;
+}
+
+mat-form-field {
+    margin-left: 110px;
+    margin-top: -22px;
+}
+
+.btn-edit {
+    font-size: 12.5px;
+    width: 30px;
+    height: 25px;
+    padding: 0px !important;
+}
+
+.delivered-Highlight {
+    background: #a7eeb9 !important;
+}
+
+.highlight {
+    background-color: #cccccc !important;
+}
+
+.both-hilight {
+    /* background-color: #a7eeb99d!important; */
+    background-color: #75ce8b !important;
+}
+
+.mat-spinner-color::ng-deep circle {
+    stroke: #c53333 !important;
+}
+
+.loadder {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    z-index: 3000;
+}
+
+.div-toggle {
+    margin-left: 0 !important;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}

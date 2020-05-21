@@ -1,0 +1,26 @@
+<div [formGroup]="form">
+    <p style="color: red;"
+        *ngIf="form.get(formControlName).touched && form.get(formControlName).invalid">
+        Type to search and select a {{component}}!</p>
+    <input class="form-control" (ngModelChange)="onChange($event)" [placeholder]="placeholder"
+        [formControlName]="formControlName" type="text" [matAutocomplete]="auto"  (ngModelChange)="change2($event)">
+</div>
+<mat-autocomplete class="comp" #auto="matAutocomplete" [displayWith]="displayfn">
+    <mat-option *ngIf="isLoading" class="is-loading">
+        <mat-spinner diameter="50" class="mat-spinner-color"></mat-spinner>
+    </mat-option>
+    <ng-container *ngIf="!isLoading">
+        <div *ngIf="!clientSide">
+            <mat-option *ngFor="let details of array" [value]="details">
+                <span> {{details.fullName}}</span>
+            </mat-option>
+        </div>
+
+        <div *ngIf="clientSide">
+            <mat-option *ngFor="let details of filteredArray" [value]="details">
+                <span> {{details.fullName}}</span>
+            </mat-option>
+        </div>
+
+    </ng-container>
+</mat-autocomplete>

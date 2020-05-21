@@ -1,0 +1,248 @@
+<mat-spinner class="loadder" *ngIf="dataTableIsLoading"></mat-spinner>
+<div style="margin-top: 10px;" class="content" [ngClass]="{'dark-overlay':dataTableIsLoading}">
+    <div class="content">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body"> 
+                    <h4 class="card-title"> <img style="cursor: pointer;" (click)="showHideInputSection()" class="div-toggle" src="../../../assets/icons/icons/div-toggle.png">Delivery Input </h4>
+                    <div class="basic-form" *ngIf="showInputSection" [@inOutAnimation]>
+
+                        <form [formGroup]="deliveryForm" (ngSubmit)="onSubmit(deliveryForm)">
+
+
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Functionality</label>
+                                    <input formControlName='functionalityInput' class="form-control" placeholder="Enter Functionality or Note">
+
+                                </div>
+
+
+                                <div class="form-group col-md-4">
+                                    <label>Delivered By</label>
+                                    <app-autocomplete [array]="deliveredByArray" [isLoading]="isLoading" [form]="deliveryForm" formControlName="deliveredByInput" placeholder="Select Delivered By" [trigger]="trigger">
+                                    </app-autocomplete>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>APPL</label>
+                                    <input formControlName='applInput' class="form-control" placeholder="Enter APPL Name">
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Source</label>
+                                    <app-autocomplete  [trigger]="trigger" [array]="sourceArray" placeholder="Select Requested By" [form]="deliveryForm" formControlName="sourceInput" [isLoading]="isLoading">
+                                    </app-autocomplete>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Jira Ticket</label>
+                                    <input formControlName='ticketInput' class="form-control" placeholder="Enter Jira Ticket Number">
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Client</label>
+                                    <app-autocomplete [trigger]="trigger" [array]="clientsArray" placeholder="Select Client Name" [form]="deliveryForm" formControlName="clientInput" [isLoading]="isLoading">
+                                    </app-autocomplete>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Type</label>
+                                    <app-autocomplete [array]="typesArray" placeholder="Select Type" formControlName="typeInput" [form]="deliveryForm" clientSide="true" [isLoading]="isLoading">
+                                    </app-autocomplete>
+
+                                </div>
+
+                                <div class="form-group col-md-8">
+                                    <label>Release Date</label><br>
+
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker" placeholder="From date" class="form-control" formControlName="releaseDateInput">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="picker1" placeholder="To date" class="form-control" formControlName="toDateInput">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+
+                                </div>
+
+
+                                <div class="form-group col-md-12">
+
+                                    <button style="position: relative; float: right;" type="submit" class="btn btn-dark">Search</button>
+
+
+                                </div>
+                            </div>
+
+                        </form>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Deliveries Table</h4>
+                    <div style="margin-top: 20px;"> <button style="position: relative; float: right;  margin-top: -13px;" type="button" *ngIf="!isConsultant" [routerLink]="['/delivery-insert-screen']" class="btn btn-dark">Insert
+                            New Delivery</button>
+                        <div>
+                            <mat-form-field>
+                                <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter...">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="margin-top: 8px;">
+                        <table mat-table matSort matSortActive="releaseDate" matSortDirection="asc" [dataSource]="dataSource" class="table table-striped table-bordered zero-configuration">
+
+                            <ng-container matColumnDef="edit">
+                                <th class="width-40" mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+                                <td class="width-40" matmat-cell *matCellDef="let element ">
+                                    <div style="text-align: center;" *ngIf="userRole==='level-2' || userRole==='level-1' || element.deliveredById==loggedUser.id ">
+                                        <span> <img class="menu-img" [matMenuTriggerFor]="menu"
+                                                src="../../../assets/icons/icons/menu.png" title="Menu"></span>
+                                        <mat-menu #menu="matMenu">
+                                            <button (click)="openEditForm(element)" mat-menu-item *ngIf="element.delivered!='O' || userRole==='level-2' || userRole==='level-1'">
+                                                <img src="../../../assets/icons/icons/edit.png" class="menu-icon"
+                                                    style="margin-right: 1px;">
+                                                Edit
+                                            </button>
+                                            <button mat-menu-item (click)="update(element)"> <img
+                                                    src="../../../assets/icons/icons/refresh.png" class="menu-icon">
+                                                Update Appls</button>
+                                            <button mat-menu-item *ngIf="(userRole==='level-2' || userRole==='level-1') && element.delivered==='N'" (click)="update(element,true)"><img class="menu-icon"
+                                                    src="../../../assets/icons/icons/tick.png"> Mark As
+                                                Delivered</button>
+                                            <!--for release manager and admin only -->
+                                        </mat-menu>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="error">
+                                <th class="width-40" mat-header-cell *matHeaderCellDef mat-sort-header> Error</th>
+                                <td class="width-40" mat-cell *matCellDef="let element" >
+                                    <div  (click)="openAppl(element)" style="text-align: center;">
+                                        <span> <img class="menu-img" *ngIf="element.errorFlag==='O'"
+                                                src="../../../assets/icons/icons/no.png"
+                                                title="One or more APPL has error"></span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+
+
+                            <ng-container matColumnDef="type">
+                                <th class="width-40" mat-header-cell *matHeaderCellDef mat-sort-header> Type
+                                </th>
+                                <td class="width-40" mat-cell *matCellDef="let element" style="text-align: center;">
+                                    <span> <img *ngIf="element.type ==='BUG'" src="../../../assets/icons/icons/bug.png"
+                                            title="BUG">
+
+                                        <img *ngIf="element.type==='NEW'" img src="../../../assets/icons/icons/task.png"
+                                            title="NEW">
+
+                                        <img *ngIf="element.type==='NEW/BUG'"
+                                            src="../../../assets/icons/icons/new-bug.png" title="NEW/BUG">
+
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="functionality">
+                                <th class="width-300" mat-header-cell *matHeaderCellDef mat-sort-header> Functionality
+                                </th>
+                                <td class="width-300" matmat-cell *matCellDef="let element"> {{element.functionality}}
+                                </td>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="client">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Client </th>
+                                <td mat-cell *matCellDef="let element"> {{element.client}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="source">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Source </th>
+                                <td mat-cell *matCellDef="let element"> {{element.source}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ticket">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket </th>
+                                <td mat-cell *matCellDef="let element"> {{element.ticket}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="appl">
+                                <th class="width-150" mat-header-cell *matHeaderCellDef mat-sort-header> Appl </th>
+                                <td mat-cell class="parentCell" *matCellDef="let element">
+                                    <div class=" ellipsis "><span>{{element.appl}}</span> </div>
+                                    <span class="show123">{{element.appl}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="deliveredBy">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivered By </th>
+                                <td mat-cell *matCellDef="let element"> {{element.deliveredBy}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="approved">
+                                <th class="width-60" mat-header-cell *matHeaderCellDef mat-sort-header> Appvrd</th>
+                                <td class="width-60" mat-cell *matCellDef="let element" style="text-align: center;">
+
+                                    <span> <img *ngIf="element.apprv==='O'" src="../../../assets/icons/icons/yes.png"
+                                            title="Approved">
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="comments">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Comments </th>
+                                <td mat-cell *matCellDef="let element" class="parentCell">
+
+                                    <div class=" ellipsis "><span>{{element.comments}}</span> </div>
+                                    <span class="show123" *ngIf="element.comments">{{element.comments}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="releaseDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Release Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.releaseDate | date: 'dd-MMM-yyyy'}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="incApp">
+                                <th class="width-60" mat-header-cell *matHeaderCellDef mat-sort-header> Incd App </th>
+                                <td class="width-60" mat-cell *matCellDef="let element" style="text-align: center;">
+                                    <span> <img *ngIf="element.incApp==='O'" src="../../../assets/icons/icons/yes.png"
+                                            title="Include App">
+                                    </span>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'delivered-Highlight': row.delivered=='O'}">
+                                <!-- ,'highlight': selectedRowIndex == row.id ,'both-hilight': selectedRowIndex == row.id && row.delivered=='O'} -->
+                            </tr>
+
+                        </table>
+
+
+
+
+
+                        <mat-paginator [pageSizeOptions]="[5,10, 50, 100]" showFirstLastButtons [length]="length" (page)="paginatorEvent($event)"></mat-paginator>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

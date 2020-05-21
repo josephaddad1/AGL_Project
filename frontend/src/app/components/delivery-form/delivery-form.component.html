@@ -1,0 +1,184 @@
+<mat-spinner class="loadder" *ngIf="loadder"></mat-spinner>
+<div style="margin-top: 10px;" class="content" [ngClass]="{'dark-overlay':loadder}">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Delivery {{formType}}</h4>
+                <div class="basic-form">
+                    <form *ngIf="deliveryForm" [formGroup]="deliveryForm" (ngSubmit)="onSubmit(deliveryForm)">
+
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+
+                                <label class="required">Delivered By</label>
+                                <app-autocomplete  [array]="deliveredByArray" [isLoading]="isLoading"
+                                    [form]="deliveryForm" formControlName="deliveredByInput"
+                                    placeholder="Select Delivered By" component="Developer" [trigger]="trigger">
+                                </app-autocomplete>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-12">
+                                <label class="required">Functionality</label>
+                                <p style="color: red;"
+                                    *ngIf="deliveryForm.get('functionalityInput').touched && deliveryForm.get('functionalityInput').invalid">
+                                    Enter functionality or note!</p>
+                                <textarea #fun formControlName='functionalityInput' class="form-control"
+                                    placeholder="Enter Functionality or Note" rows="2" maxlength="2000"></textarea>
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 ">
+                                <label style="margin-right: 10px;">Type</label>
+                                <div class="form-row" *ngFor="let types of typesArray">
+
+                                    <div class=" col-md-2  ">
+                                        <label style="cursor: pointer;">
+                                            <input type="radio" class="form-radio" formControlName="typeInput"
+                                                [value]="types.id">{{types.fullName}}</label>
+                                    </div>
+
+                                    <!-- <mat-radio-group>
+                                        <mat-radio-button [value]="" formControlName="typeInput"
+                                            radioGroup="rGroup">
+                                            {{types.fullName}}</mat-radio-button>
+                                    </mat-radio-group> -->
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required">Jira Ticket</label>
+                                <p style="color: red;"
+                                    *ngIf="deliveryForm.get('ticketInput').touched && deliveryForm.get('ticketInput').invalid">
+                                    Invalid or Empty Jira ticket!</p>
+                                <input formControlName='ticketInput' class="form-control"
+                                    placeholder="Enter Jira Ticket Example DM-6969">
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required">Client</label>
+                                <app-autocomplete [array]="clientsArray" placeholder="Select Client Name"
+                                    formControlName="clientInput" [isLoading]="isLoading" [form]="deliveryForm"
+                                    component="Client" [trigger]="trigger">
+                                </app-autocomplete>
+                            </div>
+
+                            <div class="form-check col-md-6">
+                                <div class="toggle-button-div">
+                                    <toggle-button class="toggle-button" (changed)="incAppFlag=$event"
+                                        [checked]="incAppFlag" text="inc">
+                                    </toggle-button>
+                                    <label class="form-check-label toggle-button-label">
+                                        Include CapitalBanker
+                                        app
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label class="required">Source</label>
+                                <app-autocomplete [array]="sourceArray" placeholder="Select Requested By"
+                                    [form]="deliveryForm" formControlName="sourceInput" [isLoading]="isLoading"
+                                    component="Consultant" [trigger]="trigger">
+                                </app-autocomplete>
+                            </div>
+
+                            <div class="form-check col-md-6">
+                                <div class="toggle-button-div">
+                                    <toggle-button class="toggle-button" (changed)="apprvFlag=$event" text="app"
+                                        [checked]="apprvFlag">
+                                    </toggle-button>
+                                    <label class="form-check-label toggle-button-label">Approved</label>
+                                </div>
+                                <div class="toggle-button-div" *ngIf="userRole==='level-1'">
+                                    <toggle-button style="margin-left: 8px;" class="toggle-button"
+                                        [checked]="deliveredFlag" (changed)="deliveredFlag=$event" text="delivered">
+                                    </toggle-button>
+                                    <label class="form-check-label toggle-button-label">Delivered</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+
+                            <div class="form-group col-md-12">
+                                <form [formGroup]="applForm" (ngSubmit)="addAppl(applForm)">
+                                    <label class="required">APPL</label>
+                                    <input style=" margin-bottom: 20px;" id="applInput" formControlName='applList'
+                                        class="form-control custum-input" placeholder="Enter APPL Name"
+                                        autocomplete="off">
+                                    <button type="submit" [disabled]="applForm.invalid" class="btn btn-dark">
+                                        Add appl</button>
+                                    <p style="color: red;" *ngIf="applForm.touched &&isApplListIsEmpty()">
+                                        Add one or more Appl!</p>
+
+                                    <div class=" applList form-group col-md-12 ">
+                                        <table>
+                                            <tr *ngFor="let appl of applList;">
+                                                <div style="padding: 3px;">
+                                                    <td> <button (click)="deleteAppl(appl)"
+                                                            class="btn mb-1 btn-rounded btn-danger delete-btn">
+                                                            Delete</button> </td>
+                                                    <td style="width: 100%;">{{appl}}</td>
+
+                                                </div>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label>Comments</label>
+                                <p style="color: red;"
+                                    *ngIf="deliveryForm.get('commentInput').touched && deliveryForm.get('commentInput').invalid">
+                                    Add Comment!</p>
+                                <textarea formControlName='commentInput' class="form-control"
+                                    placeholder="Enter your comment" rows="3" maxlength="4000"></textarea>
+
+                            </div>
+
+
+                            <div style="width: 100%;"><button type="button" [routerLink]="['/delivery-search-screen']"
+                                    class="btn btn-dark btn-back">
+                                    back</button>
+                                <div class="btn-right" style="position: relative; float: right;"> <button
+                                        style="margin: 5px;" type="submit" class="btn btn-success"
+                                        [disabled]="deliveryForm.invalid || isApplListIsEmpty() || loadder">{{formType ==='edit'?'Save' :'Insert New '}}
+                                        Delivery</button>
+                                    <button style="margin: 5px;" type="button" *ngIf="formType=='edit'"
+                                        [disabled]="loadder" (click)="delete()" class="btn btn-danger">Delete
+                                        Delivery
+                                    </button></div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,21 @@
+<mat-dialog-content>
+    <label>Enter Module Name</label>
+
+    <input class="form-control" type="text" [(ngModel)]="name">
+
+
+    <label>Parent APPL</label>
+
+    <input class="form-control" type="text" [(ngModel)]="parentAppl">
+
+    <div style="margin-top: 10px;">
+        <button class="btn btn-danger button" (click)="cancel()" style=" float: left;"> Cancel</button>
+
+        <button [disabled]="!name || !parentAppl" class="btn btn-success button"
+            style="float: right; margin-left: 200px;" (click)="addModule()">Add
+            Module</button>
+    </div>
+
+
+
+</mat-dialog-content>

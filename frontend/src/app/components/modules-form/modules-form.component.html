@@ -1,0 +1,90 @@
+<mat-spinner class="loadder" *ngIf="loader"></mat-spinner>
+<div style="margin-top: 10px;" class="content" [ngClass]="{'dark-overlay':loader}">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Module {{formType}}</h4>
+                <div class="basic-form">
+                    <form *ngIf="moduleForm" [formGroup]="moduleForm" (ngSubmit)="onSubmit(moduleForm)">
+
+
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label class="required">Application Name</label>
+                                <p style="color: red;" *ngIf="moduleForm.get('applicationName').touched && moduleForm.get('applicationName').invalid">
+                                    Enter Name For Application!</p>
+                                <input formControlName='applicationName' class="form-control" placeholder="Enter Name For Application" maxlength="255">
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label class="required">Model ADF Library</label>
+                                <p style="color: red;" *ngIf="moduleForm.get('modelAdfLib').touched && moduleForm.get('modelAdfLib').invalid">
+                                    Enter Model ADF Library!</p>
+                                <input formControlName='modelAdfLib' class="form-control" placeholder="Enter Model ADF Library" maxlength="255">
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label class="required">View ADF Library</label>
+                                <p style="color: red;" *ngIf="moduleForm.get('viewAdfLib').touched && moduleForm.get('viewAdfLib').invalid">
+                                    Enter Model ADF Library!</p>
+                                <input formControlName='viewAdfLib' class="form-control" placeholder="Enter View ADF Library" maxlength="255">
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-5">
+
+                                <label class="required">Module</label>
+
+                                <app-autocomplete [array]="modulesArray" [isLoading]="isLoading" [form]="moduleForm" formControlName="module" placeholder="Select Module" component="Module">
+                                </app-autocomplete>
+
+                            </div>
+                            <img src="../../../assets/icons/icons/Insert.png" title="Add new Module" [ngClass]="(moduleForm.get('module').invalid && moduleForm.get('module').touched)? 'error':'normal'" (click)="openModuleDialog()">
+
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label class="required">Sub Modules</label>
+                                <app-autocomplete [array]="subModulesArray" placeholder="Select Sub Module" formControlName="subModule" [form]="moduleForm" clientSide="true" [isLoading]="isLoading" component="Sub Module">
+                                </app-autocomplete>
+
+                            </div>
+                            <img *ngIf="moduleForm.get('module').valid" [ngClass]="(moduleForm.get('subModule').invalid && moduleForm.get('subModule').touched)? 'error':'normal'" src="../../../assets/icons/icons/Insert.png" title="Add New Sub Module For Selected Module" (click)="openSubModuleDialog()">
+                        </div>
+
+
+                        <div style="width: 100%;"><button type="button" [routerLink]="['/module-search-screen']" class="btn btn-dark btn-back">
+                                back</button>
+                            <div class="btn-right" style="position: relative; float: right;"> <button style="margin: 5px;" type="submit" class="btn btn-success" [disabled]="moduleForm.invalid || loader">{{formType ==='edit'?'Save' :'Insert'}}</button>
+                                <button style="margin: 5px;" type="button" *ngIf="formType=='edit'" [disabled]="loader" (click)="delete()" class="btn btn-danger">Delete
+                                </button></div>
+                        </div>
+
+
+                    </form>
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>

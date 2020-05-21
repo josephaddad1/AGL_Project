@@ -1,0 +1,95 @@
+<mat-dialog-content>
+    <div class="basic-form">
+        <form *ngIf="subModuleForm" [formGroup]="subModuleForm">
+
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+
+                    <label class="required">Module</label>
+                    <app-autocomplete [array]="modulesArray" [isLoading]="isLoading" [form]="subModuleForm"
+                        formControlName="module" placeholder="Select Module" component="Module">
+                    </app-autocomplete>
+                </div>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    <label class="required">Sub Module Name</label>
+                    <p style="color: red;"
+                        *ngIf="subModuleForm.get('subModuleName').touched && subModuleForm.get('subModuleName').invalid">
+                        Enter Sub Module Name!</p>
+                    <input formControlName='subModuleName' class="form-control" placeholder="Enter Name For Sub Module"
+                        maxlength="255">
+
+                </div>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group col-md-6">
+                    <label class="required">APPL</label>
+                    <p style="color: red;"
+                        *ngIf="subModuleForm.get('appl').touched && subModuleForm.get('appl').invalid">
+                        Enter APPL Name!</p>
+                    <input formControlName='appl' class="form-control" placeholder="Enter APPL Name" maxlength="255">
+
+                </div>
+            </div>
+            
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="required">Java Object</label>
+                        <p style="color: red;"
+                            *ngIf="subModuleForm.get('javaObj').touched && subModuleForm.get('javaObj').invalid">
+                            Enter War or Ear Name!</p>
+                       
+                    </div>
+    
+                    <div class="form-group col-md-6">
+                        <label class="required">Java Version</label>
+                        <p style="color: red;"
+                            *ngIf="subModuleForm.get('javaObjVersion').touched && subModuleForm.get('javaObjVersion').invalid">
+                            Enter Java Object Version!</p>
+                       
+                    </div>
+
+                </div>
+
+                <div class="form-row" style="    margin-top: -20px;">
+                <div class="form-group col-md-6">
+                    <input formControlName='javaObj' class="form-control" placeholder="Enter War or Ear Name"
+                        maxlength="255">
+
+                </div>
+
+                <div class="form-group col-md-6">
+                   
+                    <input formControlName='javaObjVersion' class="form-control" placeholder="Enter Java Object Version"
+                        maxlength="255">
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions>
+    <button class="btn btn-danger button" (click)="cancel()" style="position: relative; float: left;">
+        Cancel</button>
+
+    <button class="btn btn-success button" style="position: relative; float: right;" [disabled]="subModuleForm.invalid "
+        (click)="addSubModule(subModuleForm)">Add
+        Module</button>
+
+</mat-dialog-actions>

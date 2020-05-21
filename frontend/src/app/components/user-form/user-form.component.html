@@ -1,0 +1,94 @@
+<mat-spinner class="loadder" *ngIf="loadder"></mat-spinner>
+<div style="margin-top: 10px;" class="content" [ngClass]="{'dark-overlay':loadder}">
+
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">User {{formType}}</h4>
+                <div class="basic-form">
+                    <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)">
+
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label class="required">Full Name</label>
+                                <p style="color: red;"
+                                    *ngIf="userForm.get('fullName').touched && userForm.get('fullName').invalid">
+                                    Enter Full Name!</p>
+                                <input formControlName='fullName' class="form-control" placeholder="Enter Full Name"
+                                    maxlength="250">
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6">
+                                <label class="required">Username</label>
+                                <p style="color: red;"
+                                    *ngIf="userForm.get('username').touched && userForm.get('username').invalid">
+                                    Enter Username!</p>
+                                <input formControlName='username' class="form-control" placeholder="Enter Username"
+                                    maxlength="250">
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 ">
+                                <label class="required" style="margin-right: 10px;">Role</label>
+                                <div class="form-row">
+
+                                    <div class=" col-md-6">
+                                        <app-autocomplete [array]="roles" placeholder="Select Role"
+                                            formControlName="role" [form]="userForm" clientSide="true"
+                                            [isLoading]="loadder" component="Role">
+                                        </app-autocomplete>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6 ">
+                                <div class="toggle-button-div">
+                                    <toggle-button class="toggle-button" (changed)="consultant=$event" text="consultant"
+                                        [checked]="consultant">
+                                    </toggle-button>
+                                    <label class="form-check-label toggle-button-label">
+                                        Consultant
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="form-group col-md-6 ">
+                                <div class="toggle-button-div">
+                                    <toggle-button class="toggle-button" (changed)="statusCode=$event"
+                                        [checked]="statusCode" text="status">
+                                    </toggle-button>
+                                    <label class="form-check-label toggle-button-label">
+                                        Status (disabled)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="width: 100%;"><button type="button" [routerLink]="['/users-page']"
+                                class="btn btn-dark btn-back">
+                                back</button>
+                            <div class="btn-right" style="position: relative; float: right;"> <button
+                                    style="margin: 5px;" type="submit" class="btn btn-success"
+                                    [disabled]="userForm.invalid || loadder">{{formType ==='edit'?'Save' :'Insert New '}}
+                                    User</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

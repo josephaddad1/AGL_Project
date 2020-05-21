@@ -1,0 +1,54 @@
+table {
+  width: 100%;
+  table-layout: fixed !important;
+}
+
+th,
+.mat-paginator-page-size-label {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  font-size: 14px;
+  color: rgb(100, 98, 98);
+  font-weight: bold;
+  width: 10% !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+td {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #76838f;
+  text-align: left;
+  border: 1px solid rgb(230, 228, 228) !important;
+}
+
+img {
+  width: 18px;
+  height: 18px;
+  margin-left: 25%;
+}
+.div-toggle {
+  margin-left: 0 !important;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.loadder {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+}
+
+
+.dark-overlay {
+  opacity: 50%;
+}
