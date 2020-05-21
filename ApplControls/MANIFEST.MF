@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: lib/apache-commons-net.jar lib/jdbc-oracle.jar lib/commons-io-2.6.jar lib/jsch-0.1.42.jar
+Main-Class: com.capitalbanker.cgb.applcontrolssvn.Runner
+
